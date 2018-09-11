@@ -1,4 +1,4 @@
-// Compile with  gcc main.c -m32 -maes -o hardware_aes
+// Compile with  gcc main.c -march=native -maes -o hardware_aes
 // NOTE: This is a proof of concept aes code, it basically displays the message,key,ciphertext,and then decodes the ciphertext to get back the message or plaintext
 // Reference: http://tab.snarc.org/posts/technical/2012-04-12-aes-intrinsics.html
 #include<wmmintrin.h>
@@ -6,24 +6,25 @@
 #include<string.h>
 #include<stdio.h>
 #include<stdlib.h>
+#include <inttypes.h>
 
-void main(){
+int main(){
 	
 	// Using Pre Defined Key
-	uint64_t _k[2] __attribute__((aligned(16))) = { 0x2b7e151628aed2FF, 0xabf7158809cf4fFF };
-	uint64_t _out[2] __attribute__((aligned(16))) = { 0, 0 };
-	uint64_t _m[2] __attribute__((aligned(16))) = {0x3243f6a8885a308d, 0x313198a2e03707FF};
-	uint64_t _ct[2] __attribute__((aligned(16))) = { 0, 0 };
+	uint8_t _k[16] __attribute__((aligned(2))) = {0x2b,0x7e,0x15,0x16,0x28,0xae,0xd2,0xFF,0xab,0xf7,0x15,0x88,0x09,0xcf,0x4f,0xFF};
+	uint8_t _out[16] __attribute__((aligned(2))) = { 0, 0 };
+	uint8_t _m[16] __attribute__((aligned(2))) = {0x32,0x43,0xf6,0xa8,0x88,0x5a,0x30,0x8d,0x31,0x31,0x98,0xa2,0xe0,0x37,0x07,0xFF};
+	//uint64_t _ct[2] __attribute__((aligned(16))) = { 0, 0 };
 	
 	printf("Message is:\n");
-    	for (int i = 0; i < 2; i++) {
-        	printf("%llx", _m[i]);
+    	for (int i = 0; i < 16; i++) {
+        	printf("%x", _m[i]);
     	}
     	printf("\n");
     	
 	printf("Key to be Used is:\n");
-    	for (int i = 0; i < 2; i++) {
-        	printf("%llx", _k[i]);
+    	for (int i = 0; i < 16; i++) {
+        	printf("%x", _k[i]);
     	}
     	printf("\n");
 	
@@ -70,8 +71,8 @@ void main(){
 	
 	printf("The CipherText is as follows:\n");
         _mm_store_si128((__m128i *) _out, m);
-	for (int i = 0; i < 2; i++) {
-        	printf("%llx", _out[i]);
+	for (int i = 0; i < 16; i++) {
+        	printf("%x", _out[i]);
     	}
     	printf("\n");
     	
@@ -104,8 +105,8 @@ void main(){
     	
     	printf("The Plaintext is as follows:\n");
     	_mm_store_si128((__m128i *) _out, ct);
-    		for (int i = 0; i < 2; i++) {
-        	printf("%llx", _out[i]);
+    		for (int i = 0; i < 16; i++) {
+        	printf("%x", _out[i]);
     	}
     	printf("\n");
 }
