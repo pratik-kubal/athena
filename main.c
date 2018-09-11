@@ -1,11 +1,11 @@
+// Compile with  gcc main.c -m32 -maes -o hardware_aes
+// NOTE: This is a proof of concept aes code, it basically displays the message,key,ciphertext,and then decodes the ciphertext to get back the message or plaintext
 // Reference: http://tab.snarc.org/posts/technical/2012-04-12-aes-intrinsics.html
 #include<wmmintrin.h>
 #include<stdint.h>
 #include<string.h>
 #include<stdio.h>
 #include<stdlib.h>
-
-#define BLOCK 16
 
 void main(){
 	
@@ -18,6 +18,12 @@ void main(){
 	printf("Message is:\n");
     	for (int i = 0; i < 2; i++) {
         	printf("%llx", _m[i]);
+    	}
+    	printf("\n");
+    	
+	printf("Key to be Used is:\n");
+    	for (int i = 0; i < 2; i++) {
+        	printf("%llx", _k[i]);
     	}
     	printf("\n");
 	
@@ -45,13 +51,6 @@ void main(){
         __m128i K8  = KEYEXP(K7, 0x80);
         __m128i K9  = KEYEXP(K8, 0x1B);
         __m128i K10 = KEYEXP(K9, 0x36);
-	
-	printf("Printing Key0 to Test:\n");
-        _mm_store_si128((__m128i *) _out, K9);
-    	for (int i = 0; i < 2; i++) {
-        	printf("%llx", _out[i]);
-    	}
-    	printf("\n");
     	
     	__m128i m = _mm_load_si128((const __m128i *) _m);
     	 m = _mm_xor_si128(m, K0);
@@ -77,8 +76,8 @@ void main(){
     	printf("\n");
     	
     	printf("Decryption:\n");
-    	
-    	printf("Inverse key gen:\n");
+
+	// Inverse Key Gen
     	
     	__m128i INVK1 = _mm_aesimc_si128(K9);
     	__m128i INVK2 = _mm_aesimc_si128(K8);
