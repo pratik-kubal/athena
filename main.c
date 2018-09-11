@@ -17,7 +17,7 @@ void main(){
 	
 	printf("Message is:\n");
     	for (int i = 0; i < 2; i++) {
-        	printf("%llu", _m[i]);
+        	printf("%llx", _m[i]);
     	}
     	printf("\n");
 	
@@ -49,7 +49,7 @@ void main(){
 	printf("Printing Key0 to Test:\n");
         _mm_store_si128((__m128i *) _out, K9);
     	for (int i = 0; i < 2; i++) {
-        	printf("%llu", _out[i]);
+        	printf("%llx", _out[i]);
     	}
     	printf("\n");
     	
@@ -72,7 +72,7 @@ void main(){
 	printf("The CipherText is as follows:\n");
         _mm_store_si128((__m128i *) _out, m);
 	for (int i = 0; i < 2; i++) {
-        	printf("%llu", _out[i]);
+        	printf("%llx", _out[i]);
     	}
     	printf("\n");
     	
@@ -106,7 +106,7 @@ void main(){
     	printf("The Plaintext is as follows:\n");
     	_mm_store_si128((__m128i *) _out, ct);
     		for (int i = 0; i < 2; i++) {
-        	printf("%llu", _out[i]);
+        	printf("%llx", _out[i]);
     	}
     	printf("\n");
 }
