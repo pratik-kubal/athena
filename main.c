@@ -18,13 +18,13 @@ int main(){
 	
 	printf("Message is:\n");
     	for (int i = 0; i < 16; i++) {
-        	printf("%x", _m[i]);
+        	printf("%x ", _m[i]);
     	}
     	printf("\n");
     	
 	printf("Key to be Used is:\n");
     	for (int i = 0; i < 16; i++) {
-        	printf("%x", _k[i]);
+        	printf("%x ", _k[i]);
     	}
     	printf("\n");
 	
@@ -72,7 +72,7 @@ int main(){
 	printf("The CipherText is as follows:\n");
         _mm_store_si128((__m128i *) _out, m);
 	for (int i = 0; i < 16; i++) {
-        	printf("%x", _out[i]);
+        	printf("%x ", _out[i]);
     	}
     	printf("\n");
     	
@@ -106,7 +106,7 @@ int main(){
     	printf("The Plaintext is as follows:\n");
     	_mm_store_si128((__m128i *) _out, ct);
     		for (int i = 0; i < 16; i++) {
-        	printf("%x", _out[i]);
+        	printf("%x ", _out[i]);
     	}
     	printf("\n");
 }
